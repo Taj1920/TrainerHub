@@ -1,8 +1,0 @@
-pandas
-plotly
-streamlit
-streamlit_cookies_manager
-streamlit_cropper
-streamlit_option_menu
-Pillow
-requests
