@@ -236,30 +236,4 @@ def upd_completed(id,val):
     conn.commit()
     st.cache_data.clear()
 
-#submit program
-def upd_code(id,code):
-    cursor.execute('UPDATE TASK')
 
-
-#admin
-def user_table():
-    cursor.execute('SELECT * FROM USER')
-    return cursor.fetchall()
-def attendance_table():
-    cursor.execute('SELECT * FROM ATTENDANCE')
-    return cursor.fetchall()
-def deployment_table():
-    cursor.execute('SELECT * FROM DEPLOYMENT')
-    return cursor.fetchall()
-def notepad_table():
-    cursor.execute('SELECT * FROM NOTEPAD')
-    return cursor.fetchall()
-def skills_table():
-    cursor.execute('SELECT * FROM SKILLS')
-    return cursor.fetchall()
-def task_table():
-    cursor.execute('SELECT * FROM TASK')
-    return cursor.fetchall()
-def trainers_table():
-    cursor.execute('SELECT * FROM TRAINERS')
-    return cursor.fetchall()

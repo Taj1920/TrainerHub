@@ -8,4 +8,4 @@ streamlit_extras
 Pillow
 requests
 openpyxl
-pydrive
+
