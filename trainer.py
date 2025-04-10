@@ -331,7 +331,7 @@ def skills_page(id):
                     if i+j<len(skill_data):
                         data=skill_data[i+j][2:]
                         with col:
-                            with stylable_container(key=f'skills_{data[1]}',
+                            with stylable_container(key=f'skill_{data[0]}',
                                                     css_styles='''
                                                     {
                                                     background-color: #262730;
