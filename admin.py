@@ -56,19 +56,9 @@ def admin_interface():
     search=st.sidebar.text_input(' ',placeholder='🔍 search user...')
     selected=st.sidebar.selectbox('**Filter**',options=['All','Trainer','Manager','Active','Blocked'],key='selected')
 
-    # Open the file in binary mode
-    with open("trainer.db", "rb") as f:
-        data = f.read()
+    
 
-    # Add a download button
-    st.sidebar.download_button(
-        label="Download trainer.db",
-        data=data,
-        file_name="trainer.db",
-        mime="application/octet-stream"
-    )
-
-    tab1,tab2,tab3,tab4=st.tabs(['User Management ⚙️','Create user👤➕','Update user♻️','Delete user 🗑️'])
+    tab1,tab2,tab3,tab4,tab5=st.tabs(['User Management ⚙️','Create user👤➕','Update user♻️','Delete user 🗑️','Database📚'])
     with tab1:
         head1,head2,head3,head4,head5=st.columns([1,1,1,1,1])
         head1.markdown('##### Empid')
@@ -195,7 +185,11 @@ def admin_interface():
                 st.toast(f'🗑️ User {id} deleted')
                 time.sleep(1.5)
                 st.rerun()
-               
+    with tab5:
+        tables=st.selectbox('Tables',['USER','ATTENDANCE','NOTEPAD','TASK','SKILLS','TRAINERS','DEPLOYMENT'])
+        data=user_table()
+        pd.DataFrame(data)
+
 
                     
     
