@@ -30,13 +30,19 @@ def select_role_widget(id):
         st.session_state.user_data=get_users()
         time.sleep(1.5)
         st.rerun()
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
+import os
 
-def download_file(filepath):
-    with open(filepath, 'rb') as f:
-        data = f.read()
-    b64 = base64.b64encode(data).decode()
-    href = f'<a href="data:application/octet-stream;base64,{b64}" download="trainer.db">📥 Download trainer.db</a>'
-    return href
+def upload_to_drive(filepath):
+    gauth = GoogleAuth()
+    gauth.LocalWebserverAuth()  # Will open auth in a browser
+    drive = GoogleDrive(gauth)
+
+    file_drive = drive.CreateFile({'title': os.path.basename(filepath)})
+    file_drive.SetContentFile(filepath)
+    file_drive.Upload()
+    return file_drive['id']
 
 def admin_interface():
     m1,m2,m3,m4=st.columns(4)
