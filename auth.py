@@ -62,7 +62,7 @@ def get_email(id):
     return cursor.fetchone()[0]
 
 def upload_image(id,image):
-    cursor.execute('UPDATE TRAINERS SET IMAGE=? WHERE EMPID=?',(image,id))
+    cursor.execute('UPDATE TRAINERS SET IMAGE=? WHERE ID=(SELECT ID FROM TRAINERS WHERE EMPID=? LIMIT 1)',(image,id))
     conn.commit()
     st.cache_data.clear()
 @st.cache_data

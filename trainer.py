@@ -48,14 +48,19 @@ def upd_profile(id):
 def upload_img(id):
     img=st.file_uploader('upload image',type=['png','jpg','jpeg'])
     if img!=None:
-        progress_bar=st.progress(0)
-        for i in range(1,101):
-            time.sleep(0.1)
-            progress_bar.progress(i,text=f'uploaded  {i}%')
-        img=st_cropper(Image.open(img),box_color='blue',aspect_ratio=(1,1))
+        if 'img_uploaded' not in st.session_state:
+            st.session_state.img_uploaded=False
+        if not st.session_state.img_uploaded:
+            progress_bar=st.progress(0)
+            for i in range(1,101):
+                time.sleep(0.1)
+                progress_bar.progress(i,text=f'uploaded  {i}%')
+            st.session_state.img_uploaded=True
+            
+        cropped=st_cropper(Image.open(img),box_color='blue',aspect_ratio=(1,1))
         if st.button('ok',key='crop_image'):
             img_byte=BytesIO()
-            img.save(img_byte,format='PNG')
+            cropped.save(img_byte,format='PNG')
             bin_img=img_byte.getvalue()
             upload_image(id,bin_img)
             st.toast('Image uploaded✅')
