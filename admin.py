@@ -60,7 +60,12 @@ def admin_interface():
                 a2.metric('**Blocked**',value=df['status'][df['status']=='Blocked'].count()) 
     search=st.sidebar.text_input(' ',placeholder='🔍 search user...')
     selected=st.sidebar.selectbox('**Filter**',options=['All','Trainer','Manager','Active','Blocked'],key='selected')
+    if "show_download" not in st.session_state:
+        st.session_state.show_download=False
     if st.sidebar.button('Download Database'):
+        st.session_state.show_download=True
+
+    if st.session_state.show_download:
         st.markdown(download_file('trainer.db'),unsafe_allow_html=True)
     tab1,tab2,tab3,tab4=st.tabs(['User Management ⚙️','Create user👤➕','Update user♻️','Delete user 🗑️'])
     with tab1:
