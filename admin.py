@@ -186,9 +186,14 @@ def admin_interface():
                 time.sleep(1.5)
                 st.rerun()
     with tab5:
-        tables=st.selectbox('Tables',['USER','ATTENDANCE','NOTEPAD','TASK','SKILLS','TRAINERS','DEPLOYMENT'])
-        data=user_table()
-        pd.DataFrame(data)
+        table=st.selectbox('Tables',['USER','ATTENDANCE','NOTEPAD','TASK','SKILLS','TRAINERS','DEPLOYMENT'])
+        if st.button('Get Data'):
+            if table:
+                if table=='USER':
+                    data=user_table()
+        
+        df=pd.DataFrame(data)
+        st.write(df)
 
 
                     
