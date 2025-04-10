@@ -1,9 +1,6 @@
 import base64
 import pandas as pd
 import streamlit as st
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
-import os
 import time
 import pickle
 from auth import *
@@ -35,15 +32,6 @@ def select_role_widget(id):
         st.rerun()
 
 
-def upload_to_drive(filepath):
-    gauth = GoogleAuth()
-    gauth.LocalWebserverAuth()  # Will open auth in a browser
-    drive = GoogleDrive(gauth)
-
-    file_drive = drive.CreateFile({'title': os.path.basename(filepath)})
-    file_drive.SetContentFile(filepath)
-    file_drive.Upload()
-    return file_drive['id']
 
 def admin_interface():
     m1,m2,m3,m4=st.columns(4)
@@ -67,15 +55,19 @@ def admin_interface():
                 a2.metric('**Blocked**',value=df['status'][df['status']=='Blocked'].count()) 
     search=st.sidebar.text_input(' ',placeholder='🔍 search user...')
     selected=st.sidebar.selectbox('**Filter**',options=['All','Trainer','Manager','Active','Blocked'],key='selected')
-    if st.sidebar.button("**Backup Database to Drive**",type='primary'):
-        if os.path.exists("trainer.db"):
-            try:
-                file_id = upload_to_drive("trainer.db")
-                st.success(f"Uploaded! File ID: {file_id}")
-            except Exception as e:
-                st.error(f"Upload failed: {e}")
-        else:
-            st.warning("trainer.db not found.")
+
+    # Open the file in binary mode
+    with open("trainer.db", "rb") as f:
+        data = f.read()
+
+    # Add a download button
+    st.sidebar.download_button(
+        label="Download trainer.db",
+        data=data,
+        file_name="trainer.db",
+        mime="application/octet-stream"
+    )
+
     tab1,tab2,tab3,tab4=st.tabs(['User Management ⚙️','Create user👤➕','Update user♻️','Delete user 🗑️'])
     with tab1:
         head1,head2,head3,head4,head5=st.columns([1,1,1,1,1])
