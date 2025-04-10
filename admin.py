@@ -198,5 +198,4 @@ def admin_interface():
         conn.commit()
         with open('trainer.db','rb') as file:
             st.download_button('Download Database',file,file_name='trainerhub.db')
-        conn.close()      
     
