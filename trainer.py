@@ -296,7 +296,7 @@ def batches_page(id,filter):
                     if j<len(row_data):
                         data=row_data[j]
                         
-                        with stylable_container(key=f'stylable_classes',
+                        with stylable_container(key=f'stylable_classes_{data[1]}',
                                                 css_styles='''
                                                 {
                                                 background-color: #262730;
@@ -331,7 +331,7 @@ def skills_page(id):
                     if i+j<len(skill_data):
                         data=skill_data[i+j][2:]
                         with col:
-                            with stylable_container(key=f'stylable_classes',
+                            with stylable_container(key=f'skills_{data[1]}',
                                                     css_styles='''
                                                     {
                                                     background-color: #262730;
