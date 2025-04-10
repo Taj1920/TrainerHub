@@ -209,7 +209,6 @@ def admin_interface():
                     sql_script = f.read()
                     conn.executescript(sql_script)
                     conn.commit()
-                    conn.close()
                 with open(file_name,'r') as f:
                     st.download_button("Download Db Backup", f, file_name="trainerhub_backup.db")
             else:
