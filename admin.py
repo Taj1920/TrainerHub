@@ -201,7 +201,7 @@ def admin_interface():
                     f.write(f'{line}\n')
         if st.button('Backup Database'):
             export_db_to_sql()
-            with open("trainer_backup.sql", "rb") as f:
+            with open("trainerhub_backup.sql", "rb") as f:
                 st.download_button("Download SQL Backup", f, file_name="trainerhub_backup.sql")
 
 
