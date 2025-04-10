@@ -1,3 +1,4 @@
+import base64
 import pandas as pd
 import streamlit as st
 import time
@@ -30,6 +31,12 @@ def select_role_widget(id):
         time.sleep(1.5)
         st.rerun()
 
+def download_file(filepath):
+    with open(filepath, 'rb') as f:
+        data = f.read()
+    b64 = base64.b64encode(data).decode()
+    href = f'<a href="data:application/octet-stream;base64,{b64}" download="trainer.db">📥 Download trainer.db</a>'
+    return href
 
 def admin_interface():
     m1,m2,m3,m4=st.columns(4)
@@ -53,6 +60,7 @@ def admin_interface():
                 a2.metric('**Blocked**',value=df['status'][df['status']=='Blocked'].count()) 
     search=st.sidebar.text_input(' ',placeholder='🔍 search user...')
     selected=st.sidebar.selectbox('**Filter**',options=['All','Trainer','Manager','Active','Blocked'],key='selected')
+    st.download_button('Download Database',on_click=download_file,args=['trainer.db'])
     tab1,tab2,tab3,tab4=st.tabs(['User Management ⚙️','Create user👤➕','Update user♻️','Delete user 🗑️'])
     with tab1:
         head1,head2,head3,head4,head5=st.columns([1,1,1,1,1])
