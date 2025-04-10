@@ -194,9 +194,9 @@ def admin_interface():
         
         #             df=pd.DataFrame(data)
         #             st.write(df)
-        
+        conn=get_db_connection()
+        conn.commit()
         with open('trainer.db','rb') as file:
             st.download_button('Download Database',file,file_name='trainerhub.db')
-            st.success('Database downloaded ✅')
-                    
+        conn.close()      
     
