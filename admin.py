@@ -186,15 +186,17 @@ def admin_interface():
                 time.sleep(1.5)
                 st.rerun()
     with tab5:
-        table=st.selectbox('Tables',['USER','ATTENDANCE','NOTEPAD','TASK','SKILLS','TRAINERS','DEPLOYMENT'])
-        if st.button('Get Data'):
-            if table:
-                if table=='USER':
-                    data=user_table()
+        # table=st.selectbox('Tables',['USER','ATTENDANCE','NOTEPAD','TASK','SKILLS','TRAINERS','DEPLOYMENT'])
+        # if st.button('Get Data'):
+        #     if table:
+        #         if table=='USER':
+        #             data=user_table()
         
-                    df=pd.DataFrame(data)
-                    st.write(df)
-
-
+        #             df=pd.DataFrame(data)
+        #             st.write(df)
+        
+        with open('trainer.db','rb') as file:
+            st.download_button('Download Database',file,file_name='trainerhub.db')
+            st.success('Database downloaded ✅')
                     
     
