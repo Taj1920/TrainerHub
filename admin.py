@@ -192,8 +192,8 @@ def admin_interface():
                 if table=='USER':
                     data=user_table()
         
-        df=pd.DataFrame(data)
-        st.write(df)
+                    df=pd.DataFrame(data)
+                    st.write(df)
 
 
                     
