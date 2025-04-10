@@ -1,6 +1,9 @@
 import base64
 import pandas as pd
 import streamlit as st
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
+import os
 import time
 import pickle
 from auth import *
@@ -30,9 +33,7 @@ def select_role_widget(id):
         st.session_state.user_data=get_users()
         time.sleep(1.5)
         st.rerun()
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
-import os
+
 
 def upload_to_drive(filepath):
     gauth = GoogleAuth()
@@ -66,13 +67,15 @@ def admin_interface():
                 a2.metric('**Blocked**',value=df['status'][df['status']=='Blocked'].count()) 
     search=st.sidebar.text_input(' ',placeholder='🔍 search user...')
     selected=st.sidebar.selectbox('**Filter**',options=['All','Trainer','Manager','Active','Blocked'],key='selected')
-    if "show_download" not in st.session_state:
-        st.session_state.show_download=False
-    if st.sidebar.button('Download Database'):
-        st.session_state.show_download=True
-
-    if st.session_state.show_download:
-        st.markdown(download_file('trainer.db'),unsafe_allow_html=True)
+    if st.sidebar.button("**Backup Database to Drive**",type='primary'):
+        if os.path.exists("trainer.db"):
+            try:
+                file_id = upload_to_drive("trainer.db")
+                st.success(f"Uploaded! File ID: {file_id}")
+            except Exception as e:
+                st.error(f"Upload failed: {e}")
+        else:
+            st.warning("trainer.db not found.")
     tab1,tab2,tab3,tab4=st.tabs(['User Management ⚙️','Create user👤➕','Update user♻️','Delete user 🗑️'])
     with tab1:
         head1,head2,head3,head4,head5=st.columns([1,1,1,1,1])
