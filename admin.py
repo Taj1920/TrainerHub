@@ -194,8 +194,14 @@ def admin_interface():
         
         #             df=pd.DataFrame(data)
         #             st.write(df)
-        conn=get_db_connection()
-        conn.commit()
-        with open('trainer.db','rb') as file:
-            st.download_button('Download Database',file,file_name='trainerhub.db')
-    
+        def export_db_to_sql(sql_file="trainerhub_backup.sql"):
+            conn = get_db_connection()
+            with open(sql_file, 'w') as f:
+                for line in conn.iterdump():
+                    f.write(f'{line}\n')
+        if st.button('Backup Database'):
+            export_db_to_sql()
+            with open("trainer_backup.sql", "rb") as f:
+                st.download_button("Download SQL Backup", f, file_name="trainerhub_backup.sql")
+
+
