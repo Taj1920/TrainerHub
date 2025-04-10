@@ -143,7 +143,7 @@ def display_attend(login_data):
     return st.dataframe(dates,width=700,height=400),dates
 def to_excel(df):
     output = BytesIO()
-    with pd.ExcelWriter(output, engine='XlsxWriter') as writer:
+    with pd.ExcelWriter(output, engine='openpyxl') as writer:
         df.to_excel(writer, index=False, sheet_name='Sheet1')
     processed_data = output.getvalue()
     return processed_data
@@ -251,7 +251,6 @@ def attendance_page(id):
                         ''')
         login_data=fetch_attend(id)
         out_df,data=display_attend(login_data)
-        col1,col2=st.columns([2,1])
         out_df
         excel_data = to_excel(data)
         st.download_button(label="Download Attendance", 
